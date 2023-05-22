@@ -1,0 +1,7 @@
+before working:
+git pull
+
+after working:
+git add <new file> (for each new file)
+git commit -m "<commit message>"
+git push
