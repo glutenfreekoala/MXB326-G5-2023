@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\def\citeequation#1{%
+    \begingroup
+    \let\oldtheequation\theequation%
+    \def\theequation{\oldtheequation \cite{#1}}%
+    \equation}
+\def\endciteequation{\endequation\endgroup}
+
+\usepackage[
+backend=biber,
+style=apa]{biblatex}
+\addbibresource{References.bib}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+   \begin{center}
+       \vspace*{6cm}
+
+       \begin{large}\textbf{MXB326 Group Project - Reservoir Simulation}\end{large}
+
+       \vspace{0.5cm}
+        MXB326\_23se1 Computational Methods 2\\
+        Due 26-05-2023
+            
+       \vspace{1.5cm}
+
+       \textbf{Group 5: Benjamin Elliott, Christopher Deveney, Kye Miethke}
+
+       \vfill
+            
+       MXB326\_23se1 Computational Methods 2\\
+       Queensland University of Technology\\
+       Semester 1 2023
+            
+   \end{center}
+\end{titlepage}
+\newpage
+
+%================================== Outline ==================================%
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+
+\section{Introduction}
+%================================== Introduction ==================================%
+
+\newpage
+\section{Mathematical Model}
+%================================== Mathematical Model ==================================%
+
+\newpage
+\section{Semi-Analytical Solution}
+%================================== Semi-Analytical Model ==================================%
+
+\newpage
+\section{Numerical Solution}
+%================================== Numerical Solution ==================================%
+
+\newpage
+\section{Analysis and Findings}
+%================================== Analysis and Findings ==================================%
+
+\newpage
+\section{Conclusions}
+%================================== Conclusions ==================================%
+
+\newpage
+\section{References}
+%================================== References ==================================%
+
+\newpage
+\end{document}
