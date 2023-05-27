@@ -1,5 +1,6 @@
 % initialise workspace
 clear; close all;
+tiledlayout(2,2);
 
 beta_list = [1, 2, 4, 10];
 for beta_choice = 1:length(beta_list)
@@ -42,7 +43,7 @@ for beta_choice = 1:length(beta_list)
         end
     end
 
-    figure; hold on;
+    nexttile; hold on;
     plot(X,S(:,1))
     plot(X,S(:,2))
     plot(X,S(:,3))
