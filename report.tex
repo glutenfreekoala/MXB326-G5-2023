@@ -43,7 +43,7 @@
 
 \section{Introduction}
 %================================== Introduction ==================================%
-Oil is a natural resource which is used abundantly in modern society. Used in the creation of fuels which transport us around the world, to materials in products we use hundreds of times a day, and many places in between, it is no stretch to say that civilisation as we know it relies on oil. But the production of oil can be a slow and costly process. One method commonly used in the oil industry to improve production is called water-flooding. This processes uses the injection of water into the porous rock structure of an oil reservoir to increase the pressure, driving more oil out. Modelling this process mathematically is a key interest of a field of research known as reservoir engineering, and is of vital importance to ensure that the process of water-flooding runs smoothly.\\
+Oil is a natural resource which is used abundantly in modern society. Necessary for the creation of fuels which transport us around the world, to materials in products we use hundreds of times a day, and many applications in between, it is no stretch to say that civilisation as we know it relies on oil. But the production of oil can be a slow and costly process. One method commonly used in the oil industry to improve production is called water-flooding. This processes uses the injection of water into the porous rock structure of an oil reservoir to increase the pressure, driving more oil out. Modelling this process mathematically is a key interest of a field of research known as reservoir engineering, and is of vital importance to ensure that the process of water-flooding runs smoothly.\\
 
 This modelling, involving the simultaneous flow of two viscous fluids through a horizontal reservoir in three dimensions, is quite complex. Fortunately, the model can be substantially simplified when considering a homogeneous, one-dimensional reservoir. This simplification in turn reduces what would be a coupled system of partial differential equations into a single, one-dimensional PDE. To describe the mechanics of the system, the conservation of mass of oil and water assuming immiscibility and incompressibility, are given by the transport equations:
 \begin{eqnarray}
@@ -60,8 +60,7 @@ For a comprehensive description of the mathematical system, it is also necessary
 \end{figure}
 Figure 1 demonstrates the domain of the problem. Assuming a constant injection of water at $x=0$ at rate $q$:
 \begin{eqnarray}
-q_w(0,t) = q\\
-q_o(0,t) = 0
+q_w(0,t) = q\quad\text{and}\quad q_o(0,t) = 0
 \end{eqnarray}
 And assuming oil saturation begins at its maximum value:
 \begin{eqnarray}
@@ -73,10 +72,35 @@ Finally, assuming a semi-infinite reservoir:
 \end{eqnarray}
 For an efficient and cost-effective water-flooding operation, it is critical to prevent the water from mixing with the oil in the well-bore (extraction point). We thus define the breakthrough time as $T_B = 1-S_{or}-S_{wr}$, the time taken for the water to reach the well-bore during the water-flooding. Specification of a suitable injection rate $q$ is capable of preventing this issue from arising.\\
 
-This report contains a pilot study of the simplified system above, including a mathematical model with a semi-analytic solution and a numerical solution. These solutions will be analysed thoroughly, with the goal of demonstrating the capability of a fully detailed study in the future. 
+This report contains a pilot study of the simplified system above, including a mathematical model with a semi-analytic solution and a numerical solution. These solutions will be analysed thoroughly, with the goal of demonstrating the capability of a fully detailed study in the future.
+
 \smallbreak
 \section{Mathematical Model}
 %================================== Mathematical Model ==================================%
+It is possible to derive an exact solution for the system described above using methods from \emph{Fokas and Yortsos}, in the case of constant injection rates when the water to oil viscosity ratio $F$ has the form
+\begin{eqnarray}
+F=\frac{1-S_{wr}+\frac{\gamma}{\beta}}{S_{or}+\frac{\gamma}{\beta}}
+\end{eqnarray}
+
+Applying this, the following one-dimensional initial boundary value problem can be derived for the oil saturation:
+\begin{eqnarray}
+\frac{\partial S}{\partial t} = \frac{\partial}{\partial x} \big[g(S)\frac{\partial S}{\partial x} + f(S)\big],\\
+S(x,0)=1-S_{wr},\\
+\frac{\partial S}{\partial x}(0,t) = \frac{\alpha}{\beta}(\beta S(0,t)+\gamma) + \frac{\omega}{\beta}(\beta S(0,t)+\gamma)^2,\\
+\lim_{x\to\infty}S(x,t)=1-S_{wr}.
+\end{eqnarray}
+
+By specifying $S_{wr}, S_{or}, F, \text{and} \beta$, the remaining parameters can be determined from (6) as well as the relations
+\begin{eqnarray}
+\frac{\alpha}{\beta^2}=-\frac{(S_{or}+\frac{\gamma}{\beta})(1-S_{wr}+\frac{\gamma}{\beta})}{1-S_{wr}-S_{or}},\\
+\omega = \beta -\frac{\alpha}{\beta-\beta S_{wr}+\gamma}.
+\end{eqnarray}
+
+Furthermore, the functions $f(S)$ and $g(S)$, called the capillary-hydraulic properties of the fluid-porous system are given by
+\begin{eqnarray*}
+f(S) = \frac{\alpha}{\beta^2}\bigg[\frac{1}{1-S_{wr}+\frac{\gamma}{\beta}}-\frac{1}{S+\frac{\gamma}{\beta}}\bigg],\quad g(S)=\frac{1}{(\beta S+\gamma)^2}.
+\end{eqnarray*}
+These functions allow for an exactly solvable PDE (7), and also correspond to a physically meaningful model.
 
 \smallbreak
 \section{Semi-Analytical Solution}
