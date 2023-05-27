@@ -7,7 +7,7 @@ for beta_choice = 1:length(beta_list)
 
     % semi-analytical solution
     % set domain intervals and discretisation points:
-    X = linspace(0,1,100);
+    X = linspace(0,1,1000);
     T = [0, 0.01, 0.05, 0.1, 0.3, 0.8125, 1];
     
     N = length(X);
@@ -36,14 +36,13 @@ for beta_choice = 1:length(beta_list)
     for n = 2:length(T)
         for i = 1:length(X)
             xtilde = (beta*S(i,n-1) + gamma) * X(i) + omega*T(n-1); % guess
-            %foo = ; % anon. function handle
     
             xtilde = fzero(@(x) phiFunc(x, T(n), beta, omega) - exp(alpha*X(i)), xtilde); % find xtilde
             S(i, n) = (1/beta)*((alpha * exp(alpha * X(i)))/phi_xt(xtilde, T(n))-gamma); % calc S at xi tn
         end
     end
 
-    nexttile; hold on;
+    nexttile; hold on; % plot S(x,t) for selected beta at each time
     plot(X,S(:,2))
     plot(X,S(:,3))
     plot(X,S(:,4))
