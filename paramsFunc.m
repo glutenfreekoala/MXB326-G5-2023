@@ -7,4 +7,4 @@ gamma = beta/(F-1) * (1-Swr-F*Sor);
 alpha = -beta^2 * ((Sor + gamma/beta)*(1-Swr+ gamma/beta))/(1-Swr-Sor);
 
 % Use gamma, alpha to solve eqn (12) for omega
-omega = beta*alpha / (beta-beta*Swr + gamma);
+omega = beta - (alpha / (beta-beta*Swr + gamma));

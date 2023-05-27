@@ -13,7 +13,7 @@
 \begin{titlepage}
    \begin{center}
        \vspace*{6cm}
-
+		
        \begin{large}\textbf{MXB326 Group Project - Reservoir Simulation}\end{large}
 
        \vspace{0.5cm}
@@ -95,6 +95,7 @@ By specifying $S_{wr}, S_{or}, F, \text{and} \beta$, the remaining parameters ca
 \frac{\alpha}{\beta^2}=-\frac{(S_{or}+\frac{\gamma}{\beta})(1-S_{wr}+\frac{\gamma}{\beta})}{1-S_{wr}-S_{or}},\\
 \omega = \beta -\frac{\alpha}{\beta-\beta S_{wr}+\gamma}.
 \end{eqnarray}
+Using these equations, $\gamma$ can be found with equation (6), $\alpha$ with $\gamma$ and equation (11), and $\omega$ using the other two parameters with equation (12). This process has been implemented in the function \verb|paramsFunc|.\\
 
 Furthermore, the functions $f(S)$ and $g(S)$, called the capillary-hydraulic properties of the fluid-porous system are given by
 \begin{eqnarray*}
@@ -105,6 +106,26 @@ These functions allow for an exactly solvable PDE (7), and also correspond to a 
 \smallbreak
 \section{Semi-Analytical Solution}
 %================================== Semi-Analytical Model ==================================%
+A semi-analytical solution for (7) can be derived at discrete space $x_i$ and time $t_n$ by applying the spacial transformation 
+\begin{eqnarray}
+\tilde x = \int_0^x (\beta S(\xi,t)+\gamma)d\xi + \omega t,
+\end{eqnarray}
+This linearises the equation and yields the solution for $S$:
+\begin{eqnarray}
+S(x,t) = \frac{1}{\beta}\left[\frac{\alpha e^{\alpha x}}{\frac{\partial\phi}{\partial\tilde x}(\tilde x,t)}-\gamma\right],
+\end{eqnarray}
+where $\tilde x$ is the solution of $\phi(\tilde x,t)=e^{\alpha x}$ for a given $x$ and $t$. 
+The solution of the nonlinear equation must be obtained using MATLAB's \verb|fzero| function. The MATLAB documentation for this function indicates that it is used to find the roots of nonlinear function. Specifically, for some input \verb|x = fzero(func, x0)|, \verb|x| will return a point where $\text{func}(x) = 0$. The \verb|fzero| function requires an initial guess $x_0$ such that $\text{func}(x_0) \approx 0$. An appropriate guess for each $i=1..N$ and $n=1..M$ can be found by evaluating (13) at $x=x_i$ and $t=t_{n-1}$. Let $\hat x$ indicate the approximate initial guess. Thus we have:
+\begin{eqnarray}
+\hat x_{i,n} = \left(\beta S(x_i, t_{n-1})+\gamma\right)x_i + \omega t_{n-1}
+\end{eqnarray}
+
+This results in an iterative process for the semi-analytical solution: for each $t_n$, solve for all $x_i$ using $S(x_i,t_{n-1})$. For the initial guess at $t=t_1$, the initial condition (8) is applied. This provides $\hat x$ for all $x_i$ at $t=t_1$:
+\begin{eqnarray}
+\hat x_{i,1} = \left[\beta (1-S_{wr})+\gamma\right]x_i
+\end{eqnarray}
+With an iterative solution defined and appropriate initial conditions, the solution can be straightforwardly determined using MATLAB. This solution is implemented in the MATLAB script \verb|semianalytic.m|, and produces the following result:
+
 
 \smallbreak
 \section{Numerical Solution}
