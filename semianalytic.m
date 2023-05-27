@@ -8,12 +8,12 @@ for beta_choice = 1:length(beta_list)
     % semi-analytical solution
     % set domain intervals and discretisation points:
     X = linspace(0,1,100);
-    T = [0.01, 0.05, 0.1, 0.3, 0.8125, 1];
+    T = [0, 0.01, 0.05, 0.1, 0.3, 0.8125, 1];
     
     N = length(X);
     M = length(T);
     
-    S = zeros(N,M);
+    S = zeros(N,M+1);
 
 
     % set model parameters
@@ -44,12 +44,12 @@ for beta_choice = 1:length(beta_list)
     end
 
     nexttile; hold on;
-    plot(X,S(:,1))
     plot(X,S(:,2))
     plot(X,S(:,3))
     plot(X,S(:,4))
     plot(X,S(:,5))
     plot(X,S(:,6))
+    plot(X,S(:,7))
     xlim([0 1]); ylim([0 1]);
     title("Beta = "+num2str(beta_list(beta_choice))); ylabel("Oil Saturation"); xlabel("x");
 end
