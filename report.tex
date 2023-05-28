@@ -143,9 +143,30 @@ With an iterative solution defined and appropriate initial conditions, the solut
 
 \subsection{Average reservoir oil saturation}
 
+
 \subsection{Computational efficiency analysis}
 
-\subsection{Shock front solution analysis}
+\subsection{Buckley-Leverett solution analysis}
+For large $\beta$, the capillary forces are negligible when compared to the viscous forces. As a result, the method of characteristics can be used to obtain a simplified solution. The solution exhibits Buckley-Leverett shock front behaviour given by
+\begin{eqnarray}
+S(x,t) = \bigg\{
+\begin{array}{lr}
+S_{or}, &x<vt,\\
+1-S_{wr}, &x>vt.
+\end{array},\quad\text{where} \quad v = \frac{1}{1-S_{wr}-S_{or}}
+\end{eqnarray}
+This is implemented in MATLAB as the function \verb|BuckleyLeverett.m|. Plotting the Buckley-Leverett shock front against the semi-analytical solution with $\beta=10$, it can be seen that the semi-analytical solution does exhibit the shock front behaviour:
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width = 0.6\textwidth]{semianalytical-buckleyleverett.eps}
+\caption{The semi-analytical solution with $\beta=10$ plotted against the Buckley-Leverett shock front.}
+\end{figure}
+
+Similarly for the numerical solution:\\
+
+
+As has been observed in the plots previously, increases of $\beta$ correspond to increases of the slope of the front between the phases. As such, the shock front behaviour of becoming perfectly vertical as $\beta\to\infty$ is reasonable.
 
 \subsection{Impact of different injection rates}
 \smallbreak
