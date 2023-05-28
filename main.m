@@ -9,7 +9,7 @@ Sor = 0.15;
 F = 2;
 beta_list = [1, 2, 4, 10];
 
-X = linspace(0,1,10);
+X = linspace(0,1,100);
 T = [0, 0.01, 0.05, 0.1, 0.3, 0.8125, 1];
 
 N = length(X);
@@ -74,15 +74,38 @@ clear xt t X S N M xtilde beta beta_choice i n phi_dot phi_xt ;
 
 
 % Average Saturation
+fprintf("Plot average saturation levels.\n");
+L = 1;
+figure; tiledlayout(2,2);
+
+for beta_choice = 1:length(beta_list)
+    nexttile; hold on;
+    beta = beta_list(beta_choice);
+    f = @(S) alpha/beta^2 * (1/(1-Swr+(gamma/beta)) - 1/(S+(gamma/beta)));
+    [t,S] = ode15s(@(t,S) f(S) - 1, [0 1], 1-Swr);
+    line1 = plot(t,S, 'DisplayName','Mean Saturation');
+    line2 = plot(t,S, 'DisplayName','Mean Saturation');
+    %line 2 = plot(x,y, 'DisplayName, 'Numerical Mean Saturation');
+    % ^plot the numerical solution average here^
+
+    xlim([0 1]); ylim([0 1]); title("Beta = "+num2str(beta))
+    ylabel("Mean Saturation"); xlabel("t");
+    hL = legend([line1, line2]); hl.Layout.Tile = 'East';
+end
 
 
 % Buckley-Leverett
-fprintf("Plot semi-analytical solution with buckley leverett solution")
-figure; hold on;
+fprintf("Plot semi-analytical solution with buckley leverett solution\n")
 X = linspace(0,1,1000);
-S_BuckleyLeverett = BuckleyLeverett(X, T_SemiAnalytical, Swr, Sor);
+S_BuckleyLeverett = BuckleyLeverett(X, T, Swr, Sor);
+figure; hold on;
 plot(X, S_BuckleyLeverett, "--"); plot(X_SemiAnalytical, S_SemiAnalytical(:,:,4));
 xlim([0 1]); ylim([0 1]); xlabel("x"); ylabel("Saturation");
-title("Semi Analytical Solution with Buckley-Leverett Shock")
+title("Semi-Analytical solution with Buckley-Leverett Shock")
+figure; hold on;
+plot(X, S_BuckleyLeverett, "--"); % plot numerical solution at each T here.
+xlim([0 1]); ylim([0 1]); xlabel("x"); ylabel("Saturation");
+title("Numerical solution with Buckley-Leverett Shock") % Use an extremely high beta value
+
 
 
